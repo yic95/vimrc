@@ -29,66 +29,61 @@ let g:rainbow_active = 1
 set statusline=
 set statusline+=%#statuslinemodehilight#
 set statusline+=%{StatuslineMode()}
-set statusline+=\ %n\ 
-set statusline+=%#statuslinemodehilight2#
-set statusline+=\ %3p%%\ ┊
-set statusline+=\%4l:%3c\ ┊
+set statusline+=\ %n
+set statusline+=\ %#statuslinemodehilight2#
 set statusline+=\ %{&modified?'⬢':&readonly&&&modifiable?'⬡':&modifiable?'\ ':&readonly?'⨯':'!'}
 set statusline+=\ %f
 "set statusline+=%{StatuslineGit()}
 set statusline+=%=
 set statusline+=\ %Y
 if(has('nvim'))
-    set statusline+=\ ┊\ %{&fileencoding?&fileencoding:&encoding}
-    set statusline+=\ ┊\ %{&fileformat}
+    set statusline+=\ /\ %{&fileencoding?&fileencoding:&encoding}
+    set statusline+=\ /\ %{&fileformat}
 endif
-set statusline+=\ \ \ \ \ 
+if has('gui_running')
+    set statusline+=%#statuslinemodehilight3#
+    set statusline+=\ 
+else
+    set statusline+=\ /
+endif
+set statusline+=\ %3p%%\ /
+set statusline+=\ %l:%2c\ 
 
 function! StatuslineMode()
     let l:mode=mode()
-    if l:mode=="n"
-        hi statuslinemodehilight cterm=NONE ctermfg=255 ctermbg=106
-        hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=156
-        "return "NORMAL   "
-        "return "n"
+    if l:mode=="n" "                         fg            bg           fg           bg
+        hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=106 guifg=#000000 guibg=#87af00
+        hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=156 guifg=#000000 guibg=#afff87
+        hi statuslinemodehilight3 cterm=NONE ctermfg=0 ctermbg=106 guifg=#000000 guibg=#82ff43
     elseif l:mode=="v"
-        hi statuslinemodehilight cterm=NONE ctermfg=237 ctermbg=226
-        hi statuslinemodehilight2 cterm=NONE ctermbg=228 ctermfg=238
-        "return "VISUAL   "
-        "return "v"
+        hi statuslinemodehilight cterm=NONE ctermfg=237 ctermbg=226 guifg=#000000 guibg=#ffd700
+        hi statuslinemodehilight2 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffff87
+        hi statuslinemodehilight3 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffed55
     elseif l:mode=="i"
-        hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=69
-        hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=159
-        "return "INSERT   "
-        "return "i"
+        hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=69 guifg=#000000 guibg=#5f87ff
+        hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=159 guifg=#000000 guibg=#afffff
+        hi statuslinemodehilight3 cterm=NONE ctermfg=0 ctermbg=159 guifg=#000000 guibg=#74f3f3
     elseif l:mode=="R"
-        hi statuslinemodehilight cterm=NONE ctermfg=225 ctermbg=196
-        hi statuslinemodehilight2 cterm=NONE ctermfg=255 ctermbg=238
-        "return "REPLACE  "
-        "return "R"
+        hi statuslinemodehilight cterm=NONE ctermfg=225 ctermbg=196 guifg=#ffffff guibg=#ff0000
+        hi statuslinemodehilight2 cterm=NONE ctermfg=255 ctermbg=238 guifg=#ffffff guibg=#000000
+        hi statuslinemodehilight3 cterm=NONE ctermfg=255 ctermbg=238 guifg=#ffffff guibg=#000000
     elseif l:mode=="c"
-        hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=106
-        hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=156
-        "return "COMMAND  "
-        "return "c"
+        hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=106 guifg=#000000 guibg=#87af00
+        hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=156 guifg=#000000 guibg=#afff87
+        hi statuslinemodehilight3 cterm=NONE ctermfg=0 ctermbg=106 guifg=#000000 guibg=#82ff43
     elseif l:mode==""
-        hi statuslinemodehilight cterm=NONE ctermfg=237 ctermbg=226
-        hi statuslinemodehilight2 cterm=NONE ctermbg=228 ctermfg=238
-        "return "V-BLOCK  "
-        "return "^"
+        hi statuslinemodehilight cterm=NONE ctermfg=237 ctermbg=226 guifg=#000000 guibg=#ffd700
+        hi statuslinemodehilight2 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffff87
+        hi statuslinemodehilight3 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffed55
     elseif l:mode=="V"
-        hi statuslinemodehilight cterm=NONE ctermfg=237 ctermbg=226
-        hi statuslinemodehilight2 cterm=NONE ctermbg=228 ctermfg=238
-        "return "V-LINE   "
-        "return "V"
+        hi statuslinemodehilight cterm=NONE ctermfg=237 ctermbg=226 guifg=#000000 guibg=#ffd700
+        hi statuslinemodehilight2 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffff87
+        hi statuslinemodehilight3 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffed55
     elseif l:mode=="t"
-        hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=69
-        hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=159
-        "return "terminal "
-        "return "t"
-    else
+        hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=69 guifg=#000000 guibg=#5f87ff
+        hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=159 guifg=#000000 guibg=#afffff
+        hi statuslinemodehilight3 cterm=NONE ctermfg=0 ctermbg=159 guifg=#000000 guibg=#74f3f3
     endif
-    "return bufnr('%')
     return ""
 endfunction
 
@@ -165,7 +160,7 @@ call plug#end()
 " Plugins setting
 
 " yggdroot/indentline{
-let g:indentLine_char = '┊'
+let g:indentLine_char = '|'
 "}
 
 let g:coc_global_extensions = ['coc-python','coc-css', 'coc-html', 'coc-pairs', 'coc-yank']

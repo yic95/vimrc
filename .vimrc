@@ -140,7 +140,7 @@ imap <M-d> <Del>
 
 
 
-call plug#begin('~/vimfiles/plugged')
+call plug#begin('~/.vim/plugged')
 Plug 'prettier/vim-prettier'
 Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdcommenter'

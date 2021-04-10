@@ -91,8 +91,7 @@ endfunction
 set showtabline=1  " 1 to show tabline only when more than one tab is present
 
 set laststatus=2
-let lc1='tab:\|\ ,trail:×,nbsp:×,eol:↵,space:·'
-let lc2='tab:→,trail:X,nbsp:_,eol:/'
+let g:lc1='tab:\|\ ,trail:×,nbsp:×,eol:↵,space:·'
 let &listchars = g:lc1
 set list
 
@@ -100,10 +99,11 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
+let g:netrw_menu = 0
 
-nmap <F2> :CocCommand explorer<CR>
+nmap <F2> :NERDTree <CR>
 
-nmap <F8> :TagbarToggle<CR>
+nmap <F4> :TagbarToggle<CR>
 
 let g:mouseMode=0
 set mouse=
@@ -129,7 +129,7 @@ map <leader>l l
 map <leader>k k
 map <leader>j j
 map <leader>h h
-imap <M-u> 
+imap <M-u> 
 imap <M-j> <Down>
 imap <M-k> <Up>
 imap <M-h> <Left>
@@ -149,12 +149,20 @@ Plug 'justincampbell/vim-eighties'
 Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'scrooloose/nerdtree'
-"Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'scrooloose/nerdtree'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'luochen1990/rainbow'
-Plug 'joshdick/onedark.vim'
-Plug 'morhetz/gruvbox'
 Plug 'yggdroot/indentline'
+Plug 'neomake/neomake'
+if has('nvim')
+    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+endif
+"Plug 'lucasprag/simpleblack'
+"Plug 'sickill/vim-monokai'
+"Plug 'itchyny/vim-cursorword'
+Plug 'morhetz/gruvbox'
+Plug 'sonph/onehalf'
+Plug 'sainnhe/gruvbox-material'
 call plug#end()
 
 " Plugins setting
@@ -162,14 +170,28 @@ call plug#end()
 " yggdroot/indentline{
 let g:indentLine_char = '|'
 "}
+"neomake/neomake{
+" Full config: when writing or reading a buffer, and on changes in insert and
+" normal mode (after 500ms; no delay when writing).
+call neomake#configure#automake('inrw', 50)
+"}
 
-let g:coc_global_extensions = ['coc-python','coc-css', 'coc-html', 'coc-pairs', 'coc-yank']
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+augroup disableRnuOnInsertMode
+    autocmd!
+    autocmd InsertEnter * set norelativenumber
+    autocmd InsertLeave * set relativenumber 
+augroup END
+let g:coc_global_extensions = ['coc-python','coc-css', 'coc-pairs', 'coc-yank']
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set termguicolors
 set colorcolumn=80
-set nu
 set ruler
 syntax enable
-set nocompatible
 set cursorline
 set cursorcolumn
 set smartcase
@@ -191,8 +213,7 @@ set nowrap
 set noautowrite
 "set t_co=256
 set encoding=utf8
-colo seoul256
-colo onedark
+colo gruvbox-material
 set background=dark
 set undofile
 

@@ -1,31 +1,12 @@
+" My config for neovim/vim
+" by yic95
 
+
+"set language
 set langmenu=en_US.utf8
 
-map <C-l> :call SwitchLineBreakingMode()<CR>
-map! <C-l> <Esc>:call SwitchLineBreakingMode()<CR>
-function SwitchLineBreakingMode()
-    if (&wrap == 0)
-        set wrap
-        echo "Wrap"
-    else
-        set nowrap
-        echo "No wrap"
-    endif
-endfunction
-
-
-let g:rainbow_active = 1
-
-"function! GitBranch()
-"  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-"endfunction
-
-"function! StatuslineGit()
-"  let l:branchname = GitBranch()
-"  return strlen(l:branchname) > 0?'  ('.l:branchname.') ':''
-"endfunction
-
-
+"custom status line {
+"   setup status line{
 set statusline=
 set statusline+=%#statuslinemodehilight#
 set statusline+=%{StatuslineMode()}
@@ -33,7 +14,6 @@ set statusline+=\ %n
 set statusline+=\ %#statuslinemodehilight2#
 set statusline+=\ %{&modified?'⬢':&readonly&&&modifiable?'⬡':&modifiable?'\ ':&readonly?'⨯':'!'}
 set statusline+=\ %f
-"set statusline+=%{StatuslineGit()}
 set statusline+=%=
 set statusline+=\ %Y
 if(has('nvim'))
@@ -48,37 +28,46 @@ else
 endif
 set statusline+=\ %3p%%\ /
 set statusline+=\ %l:%2c\ 
-
+"   }
+"   statusline require function {
 function! StatuslineMode()
     let l:mode=mode()
-    if l:mode=="n" "                         fg            bg           fg           bg
+    " normal
+    if l:mode=="n"
         hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=106 guifg=#000000 guibg=#87af00
         hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=156 guifg=#000000 guibg=#afff87
         hi statuslinemodehilight3 cterm=NONE ctermfg=0 ctermbg=106 guifg=#000000 guibg=#82ff43
+    " visual
     elseif l:mode=="v"
         hi statuslinemodehilight cterm=NONE ctermfg=237 ctermbg=226 guifg=#000000 guibg=#ffd700
         hi statuslinemodehilight2 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffff87
         hi statuslinemodehilight3 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffed55
+    " insert
     elseif l:mode=="i"
         hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=69 guifg=#000000 guibg=#5f87ff
         hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=159 guifg=#000000 guibg=#afffff
         hi statuslinemodehilight3 cterm=NONE ctermfg=0 ctermbg=159 guifg=#000000 guibg=#74f3f3
+    " replace
     elseif l:mode=="R"
         hi statuslinemodehilight cterm=NONE ctermfg=225 ctermbg=196 guifg=#ffffff guibg=#ff0000
         hi statuslinemodehilight2 cterm=NONE ctermfg=255 ctermbg=238 guifg=#ffffff guibg=#000000
         hi statuslinemodehilight3 cterm=NONE ctermfg=255 ctermbg=238 guifg=#ffffff guibg=#000000
+    " command-line
     elseif l:mode=="c"
         hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=106 guifg=#000000 guibg=#87af00
         hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=156 guifg=#000000 guibg=#afff87
         hi statuslinemodehilight3 cterm=NONE ctermfg=0 ctermbg=106 guifg=#000000 guibg=#82ff43
+    " visual blobk
     elseif l:mode==""
         hi statuslinemodehilight cterm=NONE ctermfg=237 ctermbg=226 guifg=#000000 guibg=#ffd700
         hi statuslinemodehilight2 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffff87
         hi statuslinemodehilight3 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffed55
+    " visual line
     elseif l:mode=="V"
         hi statuslinemodehilight cterm=NONE ctermfg=237 ctermbg=226 guifg=#000000 guibg=#ffd700
         hi statuslinemodehilight2 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffff87
         hi statuslinemodehilight3 cterm=NONE ctermbg=228 ctermfg=238 guifg=#000000 guibg=#ffed55
+    " terminal
     elseif l:mode=="t"
         hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=69 guifg=#000000 guibg=#5f87ff
         hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=159 guifg=#000000 guibg=#afffff
@@ -86,27 +75,14 @@ function! StatuslineMode()
     endif
     return ""
 endfunction
+"   }
+"}
 
 
-set showtabline=1  " 1 to show tabline only when more than one tab is present
-
-set laststatus=2
-let g:lc1='tab:\|\ ,trail:×,nbsp:×,eol:↵,space:·'
-let &listchars = g:lc1
-set list
-
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
-let g:netrw_menu = 0
-
-nmap <F2> :NERDTree <CR>
-
-nmap <F4> :TagbarToggle<CR>
-
-let g:mouseMode=0
-set mouse=
+"maps {
+"   toggle mouse mode {
+let g:mouseMode=1
+set mouse=a
 function MouseMode()
     if (g:mouseMode==1)
         set mouse=
@@ -118,25 +94,39 @@ function MouseMode()
         echo "mouse mode enabled"
     endif
 endfunction
-nmap <F3> :call MouseMode() <CR>
-imap <F3> :call MouseMode()a
+nmap <F2> :call MouseMode() <CR>
+imap <F2> :call MouseMode()a
+"   }
+"   open nerd tree {
+nmap <F3> :NERDTree <CR>
+imap <F3> :NERDTree <CR>
+"   }
 
-
+"   toggle Tagbar{
+nmap <F4> :TagbarToggle<CR>
+imap <F4> :TagbarToggle<CR>
+"   }
+"   toggle wrap{
+map <C-l> :call SwitchLineBreakingMode()<CR>
+map! <C-l> <Esc>:call SwitchLineBreakingMode()<CR>
+function SwitchLineBreakingMode()
+    if (&wrap == 0)
+        set wrap
+        echo "Wrap"
+    else
+        set nowrap
+        echo "No wrap"
+    endif
+endfunction
+"   }
 
 let mapleader = ","
-map <leader>s <esc>:w<CR>
-map <leader>l l
-map <leader>k k
-map <leader>j j
-map <leader>h h
-imap <M-u> 
 imap <M-j> <Down>
 imap <M-k> <Up>
 imap <M-h> <Left>
 imap <M-l> <Right>
-imap <M-i> 
 imap <M-d> <Del>
-
+"}
 
 
 
@@ -163,31 +153,36 @@ endif
 Plug 'morhetz/gruvbox'
 Plug 'sonph/onehalf'
 Plug 'sainnhe/gruvbox-material'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 
-" Plugins setting
-
-" yggdroot/indentline{
+"Plugins setting{
+"   yggdroot/indentline{
 let g:indentLine_char = '|'
-"}
-"neomake/neomake{
+"   }
+
+"   neomake/neomake{
 " Full config: when writing or reading a buffer, and on changes in insert and
 " normal mode (after 500ms; no delay when writing).
 call neomake#configure#automake('inrw', 50)
+"   }
+
+"   luochen1990/rainbow {
+let g:rainbow_active = 1
+"   }
+
+"   neoclide/coc.nvim{
+let g:coc_global_extensions = ['coc-python','coc-css', 'coc-pairs', 'coc-yank']
+"   }
 "}
+
+"other settings
 
 augroup numbertoggle
   autocmd!
   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
-augroup disableRnuOnInsertMode
-    autocmd!
-    autocmd InsertEnter * set norelativenumber
-    autocmd InsertLeave * set relativenumber 
-augroup END
-let g:coc_global_extensions = ['coc-python','coc-css', 'coc-pairs', 'coc-yank']
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 set colorcolumn=80
 set ruler
@@ -216,4 +211,19 @@ set encoding=utf8
 colo gruvbox-material
 set background=dark
 set undofile
+set showtabline=1  " 1 to show tabline only when more than one tab is present
+set laststatus=2 " alwayse show statusline
 
+"custom list char{
+let g:lc1='tab:\|\ ,trail:×,nbsp:×,eol:↵,space:·'
+let &listchars = g:lc1
+set list
+"}
+
+" netrw settind{
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+let g:netrw_menu = 0
+"}

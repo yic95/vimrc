@@ -153,6 +153,8 @@ endif
 Plug 'morhetz/gruvbox'
 Plug 'sonph/onehalf'
 Plug 'sainnhe/gruvbox-material'
+Plug 'jacoborus/tender.vim'
+Plug 'lifepillar/vim-gruvbox8'
 Plug 'rust-lang/rust.vim'
 call plug#end()
 

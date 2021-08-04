@@ -100,8 +100,8 @@ nmap <F2> :call MouseMode() <CR>
 imap <F2> :call MouseMode()a
 "   }
 "   open nerd tree {
-nmap <F3> :NERDTree <CR>
-imap <F3> :NERDTree <CR>
+nmap <F3> :Vex <CR>
+imap <F3> :Vex <CR>
 "   }
 
 "   toggle Tagbar{
@@ -133,29 +133,39 @@ imap <M-d> <Del>
 
 
 call plug#begin('~/.vim/plugged')
+" editing
 Plug 'prettier/vim-prettier'
-Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdcommenter'
-Plug 'majutsushi/tagbar'
-Plug 'justincampbell/vim-eighties'
 Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" git
+Plug 'airblade/vim-gitgutter'
+
+" language
+Plug 'rust-lang/rust.vim'
+"Plug 'neomake/neomake'
+
+" etc
+Plug 'majutsushi/tagbar'
+Plug 'justincampbell/vim-eighties'
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'luochen1990/rainbow'
 Plug 'yggdroot/indentline'
-"Plug 'neomake/neomake'
 "Plug 'lucasprag/simpleblack'
 "Plug 'sickill/vim-monokai'
 "Plug 'itchyny/vim-cursorword'
+
+" color
+Plug 'lifepillar/vim-gruvbox8'
+Plug 'ayu-theme/ayu-vim'
+Plug 'andreasvc/vim-256noir'
 "Plug 'morhetz/gruvbox'
 "Plug 'sonph/onehalf'
 "Plug 'sainnhe/gruvbox-material'
 "Plug 'jacoborus/tender.vim'
-Plug 'lifepillar/vim-gruvbox8'
-Plug 'rust-lang/rust.vim'
-Plug 'ayu-theme/ayu-vim'
 call plug#end()
 
 "Plugins setting{

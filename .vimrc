@@ -23,13 +23,13 @@ if(has('nvim'))
 endif
 "if has('gui_running')
     "set statusline+=%#statuslinemodehilight3#
-    "set statusline+=\ 
+    "set statusline+=\
 "else
     "set statusline+=\ /
 "endif
 set statusline+=\ /
 set statusline+=\ %3p%%\ /
-set statusline+=\ %l:%2c\ 
+set statusline+=\ %l:%2c\
 "   }
 "   statusline require function {
 function! StatuslineMode()
@@ -154,6 +154,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'luochen1990/rainbow'
 Plug 'yggdroot/indentline'
+Plug 'jceb/vim-orgmode'
 "Plug 'lucasprag/simpleblack'
 "Plug 'sickill/vim-monokai'
 "Plug 'itchyny/vim-cursorword'
@@ -242,21 +243,35 @@ let g:netrw_winsize = 20
 "augroup END
 "}
 
-au BufNewFile, BufRead *.py,*.rs
+autocmd BufNewFile, BufRead *.py,*.rs
+    \ colorscheme ayu |
+    \ set colorcolumn=80 |
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
     \ set textwidth=79 |
     \ set expandtab |
     \ set autoindent |
-    \ set fileformat=unix
+    \ set fileformat=unix |
+    \ set cursorcolumn
 
-au BufNewFile, BufRead *.js, *.html, *.css
+autocmd BufNewFile, BufRead *.js,*.html,*.css
+    \ colorscheme ayu |
     \ set expandtab |
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
 
+autocmd BufNewFile, BufRead *.md,*.ly,*.txt
+    \ colorscheme 256_noir |
+    \ set colorcolumn=0 |
+    \ set nocursorcolumn
+
+if executable("python3")
+    autocmd BufRead,BufNewFile *.py noremap <F5> :w:!python3 %
+else
+    autocmd BufRead,BufNewFile *.py noremap <F5> :echo you need to install Ruby first!"
+endif
 
 
 " coc-nvim{

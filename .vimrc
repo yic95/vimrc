@@ -23,13 +23,13 @@ if(has('nvim'))
 endif
 "if has('gui_running')
     "set statusline+=%#statuslinemodehilight3#
-    "set statusline+=\
+    "set statusline+=\ 
 "else
     "set statusline+=\ /
 "endif
 set statusline+=\ /
 set statusline+=\ %3p%%\ /
-set statusline+=\ %l:%2c\
+set statusline+=\ %l:%2c\ 
 "   }
 "   statusline require function {
 function! StatuslineMode()
@@ -56,7 +56,7 @@ function! StatuslineMode()
         "hi statuslinemodehilight3 cterm=NONE ctermfg=255 ctermbg=238 guifg=#ffffff guibg=#000000
     " command-line
     elseif l:mode=="c"
-        hi statuslinemodehilight cterm=NONE ctermfg=0 ctermbg=106 guifg=#000000 guibg=#87af00
+        hi statuslinemodehilight cterm=BOLD ctermfg=0 ctermbg=106 guifg=#000000 guibg=#87af00 gui=BOLD
         "hi statuslinemodehilight2 cterm=NONE ctermfg=0 ctermbg=156 guifg=#000000 guibg=#afff87
         "hi statuslinemodehilight3 cterm=NONE ctermfg=0 ctermbg=106 guifg=#000000 guibg=#82ff43
     " visual blobk
@@ -99,9 +99,12 @@ endfunction
 nmap <F2> :call MouseMode() <CR>
 imap <F2> :call MouseMode()a
 "   }
-"   open nerd tree {
-nmap <F3> :Vex <CR>
-imap <F3> :Vex <CR>
+"   open file browser {
+function OpenFileBrowser()
+    NERDTree
+endfunction
+nmap <F3> :call OpenFileBrowser()<CR>
+imap <F3> :call OpenFileBrowser()<CR>
 "   }
 
 "   toggle Tagbar{
@@ -122,12 +125,51 @@ function SwitchLineBreakingMode()
 endfunction
 "   }
 
-let mapleader = ","
 imap <M-j> <Down>
 imap <M-k> <Up>
 imap <M-h> <Left>
 imap <M-l> <Right>
 imap <M-d> <Del>
+"    leader keys map {
+let mapleader = ","
+
+" BUFFER
+map <leader>bb :b 
+map <leader>bn :e 
+
+"WINDOWS CONTROL
+map <leader>wn :new 
+map <leader>wv :vnew 
+map <leader>wh h
+map <leader>wj j
+map <leader>wk k
+map <leader>wl l
+map <leader>wo :only<CR>
+map <leader>wrh :vertical resize +10<CR>
+map <leader>wrl :vertical resize -10<CR>
+map <leader>wrj :resize +5<CR>
+map <leader>wrk :resize -5<CR>
+
+"TAB
+map <leader>tt :tabedit 
+
+"SEARCHING
+map <leader>ss /
+map <leader>sd ?
+
+"OTHER
+map <leader>xa :call MouseMode()<CR>
+map <leader>xs :call OpenFileBrowser()<CR>
+map <leader>xd :TagbarToggle<CR>
+map <leader>xf :terminal<CR>
+
+"QUIT
+map <leader>qq :q<CR>
+map <leader>qw :wq<CR>
+map <leader>qa :qa<CR>
+map <leader>qs :wqa<CR>
+map <leader>q! :q
+"    }
 "}
 
 
@@ -151,10 +193,10 @@ Plug 'rust-lang/rust.vim'
 Plug 'majutsushi/tagbar'
 Plug 'justincampbell/vim-eighties'
 Plug 'scrooloose/nerdtree'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+"Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'luochen1990/rainbow'
 Plug 'yggdroot/indentline'
-Plug 'jceb/vim-orgmode'
+"Plug 'jceb/vim-orgmode'
 "Plug 'lucasprag/simpleblack'
 "Plug 'sickill/vim-monokai'
 "Plug 'itchyny/vim-cursorword'
@@ -163,6 +205,7 @@ Plug 'jceb/vim-orgmode'
 Plug 'lifepillar/vim-gruvbox8'
 Plug 'ayu-theme/ayu-vim'
 Plug 'andreasvc/vim-256noir'
+"Plug 'agude/vim-eldar'
 "Plug 'morhetz/gruvbox'
 "Plug 'sonph/onehalf'
 "Plug 'sainnhe/gruvbox-material'
